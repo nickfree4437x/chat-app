@@ -23,16 +23,24 @@ export const useChatStore = create((set, get) => ({
   },
 
   getMessages: async (userId) => {
-    set({ isMessagesLoading: true });
-    try {
-      const res = await axiosInstance.get(`/messages/${userId}`);
-      set({ messages: res.data });
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      set({ isMessagesLoading: false });
+  set({ isMessagesLoading: true });
+  try {
+    const res = await axiosInstance.get(`/messages/${userId}`);
+    console.log("✅ API Response for getMessages:", res.data);
+
+    if (!Array.isArray(res.data)) {
+      throw new Error("Expected an array but got something else");
     }
-  },
+
+    set({ messages: res.data });
+  } catch (error) {
+    console.error("❌ Error fetching messages:", error);
+    toast.error(error.response?.data?.message || "Something went wrong");
+  } finally {
+    set({ isMessagesLoading: false });
+  }
+},
+
   sendMessage: async (messageData) => {
     const { selectedUser, messages } = get();
     try {

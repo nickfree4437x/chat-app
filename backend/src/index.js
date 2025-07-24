@@ -38,8 +38,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.get('/' , (req , res) => {
-  res.send('Server is working file');
+app.get("/", (req, res) => {
+  res.send("✅ API is working perfectly!");
 });
 
 // Connect DB first, then start server

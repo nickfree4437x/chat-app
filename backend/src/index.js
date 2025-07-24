@@ -38,6 +38,10 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+app.get('/' , (req , res) => {
+  res.send('Server is working file');
+});
+
 // Connect DB first, then start server
 connectDB().then(() => {
   server.listen(PORT, () => {
